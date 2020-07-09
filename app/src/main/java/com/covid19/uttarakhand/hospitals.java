@@ -1,8 +1,11 @@
 package com.covid19.uttarakhand;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,76 +51,95 @@ public class hospitals extends FragmentActivity implements OnMapReadyCallback {
         mLocationRequest.setInterval(180000);
         mLocationRequest.setFastestInterval(90000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         fusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
         mMap.setMyLocationEnabled(true);
 
         // Test Center 1
-        final LatLng center1 = new LatLng(15.462846, 73.857513);
-        mMap.addMarker(new MarkerOptions().position(center1).title("Goa Medical College & Hospital").snippet("website: http://www.gmc.goa.gov.in/index.php/en/"));
+        final LatLng center1 = new LatLng(30.316969, 78.205088);
+        mMap.addMarker(new MarkerOptions().position(center1).title("Mela Hospital"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(center1));
 
         //Test Center 2
-        final LatLng center2 = new LatLng(15.596924, 73.820260);
-        mMap.addMarker(new MarkerOptions().position(center2).title("District Hospital, Mapusa").snippet("website: http://www.dhsgoa.gov.in/tel-nos.htm"));
+        final LatLng center2 = new LatLng(29.901475, 79.635317);
+        mMap.addMarker(new MarkerOptions().position(center2).title("ICAR-Indian Veterinary Research Institute (IVRI), Mukteswar").snippet("website: http://www.ivri.nic.in/campuses/mukt/default.aspx"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(center2));
 
         //Test Center 3
-        final LatLng center3 = new LatLng(15.605917, 73.813276);
-        mMap.addMarker(new MarkerOptions().position(center3).title("Dr. Kolwalkar's Galaxy Hospital").snippet("website: http://galaxyhospitalgoa.com/"));
+        final LatLng center3 = new LatLng(30.378507, 78.294264);
+        mMap.addMarker(new MarkerOptions().position(center3).title("All India Institute of Medical Science Rishikesh").snippet("website: http://utsr.org/"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(center3));
 
         //Test Center 4
-        final LatLng center4 = new LatLng(15.268915, 73.965600);
-        mMap.addMarker(new MarkerOptions().position(center4).title("Victor Hospital").snippet("website: http://victorhospital.com/"));
+        final LatLng center4 = new LatLng(30.687744, 78.104980);
+        mMap.addMarker(new MarkerOptions().position(center4).title("Indian Institute of Petroleum").snippet("website: https://www.iip.res.in/"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(center4));
 
         //Test Center 5
-        final LatLng center5 = new LatLng(15.460034, 73.813516);
-        mMap.addMarker(new MarkerOptions().position(center5).title("Manipal Hospitals Goa").snippet("website: https://www.manipalhospitals.com/goa/"));
+        final LatLng center5 = new LatLng(30.627193, 78.017840);
+        mMap.addMarker(new MarkerOptions().position(center5).title("Dr. Ahujas' Pathology and Imaging Centre").snippet("website: http://www.drahujadiagnostics.in/"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(center5));
 
         //Test Center 6
-        final LatLng center6 = new LatLng(15.604626, 73.820396);
-        mMap.addMarker(new MarkerOptions().position(center6).title("Vision Hospital in Mapusa Goa").snippet("website: https://visionhospitalgoa.com/"));
+        final LatLng center6 = new LatLng(30.308919, 78.024129);
+        mMap.addMarker(new MarkerOptions().position(center6).title("Government Doon Medical College").snippet("website: http://doonmedical.org/contact-us/"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(center6));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(6));
 
         //Test Center 7
-        final LatLng center7 = new LatLng(15.597050, 73.820198);
-        mMap.addMarker(new MarkerOptions().position(center7).title("Asilo Hospital"));
+        final LatLng center7 = new LatLng(30.523891, 78.889507);
+        mMap.addMarker(new MarkerOptions().position(center7).title("Veer Chandra Singh Garhwali Govt. Institute of Medical Science & Research").snippet("website: http://www.vcsgsrinagar.org/"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(center7));
+
+        //Test Center 8
+        final LatLng center8 = new LatLng(30.956190, 78.457421);
+        mMap.addMarker(new MarkerOptions().position(center8).title("District Hospital").snippet("website: https://uttarkashi.nic.in/health/"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(center8));
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                if(marker.getPosition().equals(center1)) {
-                    Uri uriUrl = Uri.parse("http://www.gmc.goa.gov.in/index.php/en/");
+                if(marker.getPosition().equals(center2)) {
+                    Uri uriUrl = Uri.parse("http://www.ivri.nic.in/campuses/mukt/default.aspx");
                     Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
                     startActivity(launchBrowser);
                 }
-                else if(marker.getPosition().equals(center2)) {
-                    Uri uriUrl = Uri.parse("http://www.dhsgoa.gov.in/tel-nos.htm");
+                else if(marker.getPosition().equals(center3)) {
+                    Uri uriUrl = Uri.parse("http://utsr.org/");
                     Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
                     startActivity(launchBrowser);
                 }
 
-                else if(marker.getPosition().equals(center3)) {
-                    Uri uriUrl = Uri.parse("http://galaxyhospitalgoa.com/");
-                    Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
-                    startActivity(launchBrowser);
-                }
                 else if(marker.getPosition().equals(center4)) {
-                    Uri uriUrl = Uri.parse("http://victorhospital.com/");
+                    Uri uriUrl = Uri.parse("https://www.iip.res.in/");
                     Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
                     startActivity(launchBrowser);
                 }
                 else if(marker.getPosition().equals(center5)) {
-                    Uri uriUrl = Uri.parse("https://www.manipalhospitals.com/goa/");
+                    Uri uriUrl = Uri.parse("http://www.drahujadiagnostics.in/");
                     Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
                     startActivity(launchBrowser);
                 }
                 else if(marker.getPosition().equals(center6)) {
-                    Uri uriUrl = Uri.parse("https://visionhospitalgoa.com/");
+                    Uri uriUrl = Uri.parse("http://doonmedical.org/contact-us/");
+                    Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                    startActivity(launchBrowser);
+                }
+                else if(marker.getPosition().equals(center7)) {
+                    Uri uriUrl = Uri.parse("http://www.vcsgsrinagar.org/");
+                    Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                    startActivity(launchBrowser);
+                }
+                else if(marker.getPosition().equals(center8)) {
+                    Uri uriUrl = Uri.parse("https://uttarkashi.nic.in/health/");
                     Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
                     startActivity(launchBrowser);
                 }
@@ -144,5 +166,5 @@ public class hospitals extends FragmentActivity implements OnMapReadyCallback {
         Intent intent = new Intent(hospitals.this, home.class);
         startActivity(intent);
         finish();
-    };
+    }
 }
